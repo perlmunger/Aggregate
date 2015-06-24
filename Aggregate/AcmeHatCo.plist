@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>ProductLine</key>
+		<string>Top Hat</string>
+		<key>ProductName</key>
+		<string>Black with Purple Ribbon</string>
+		<key>Returned</key>
+		<integer>3</integer>
+		<key>Sold</key>
+		<integer>14</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Top Hat</string>
+		<key>ProductName</key>
+		<string>Black with Gray Ribbon</string>
+		<key>Returned</key>
+		<integer>2</integer>
+		<key>Sold</key>
+		<integer>22</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Top Hat</string>
+		<key>ProductName</key>
+		<string>Gray with Red Feather</string>
+		<key>Returned</key>
+		<integer>1</integer>
+		<key>Sold</key>
+		<integer>14</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Bowler</string>
+		<key>ProductName</key>
+		<string>Derby Green Felt</string>
+		<key>Returned</key>
+		<integer>3</integer>
+		<key>Sold</key>
+		<integer>5</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Bowler</string>
+		<key>ProductName</key>
+		<string>Derby Red Silk</string>
+		<key>Returned</key>
+		<integer>1</integer>
+		<key>Sold</key>
+		<integer>15</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Bowler</string>
+		<key>ProductName</key>
+		<string>Ladies Bowler</string>
+		<key>Returned</key>
+		<integer>0</integer>
+		<key>Sold</key>
+		<integer>28</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Stetson</string>
+		<key>ProductName</key>
+		<string>Light Brown Leather</string>
+		<key>Returned</key>
+		<integer>12</integer>
+		<key>Sold</key>
+		<integer>45</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Stetson</string>
+		<key>ProductName</key>
+		<string>Dark Brown Leather</string>
+		<key>Returned</key>
+		<integer>11</integer>
+		<key>Sold</key>
+		<integer>42</integer>
+	</dict>
+	<dict>
+		<key>ProductLine</key>
+		<string>Stetson</string>
+		<key>ProductName</key>
+		<string>Black Leather</string>
+		<key>Returned</key>
+		<integer>4</integer>
+		<key>Sold</key>
+		<integer>55</integer>
+	</dict>
+</array>
+</plist>
