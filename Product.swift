@@ -18,17 +18,17 @@ class Product: NSManagedObject {
         }
     }
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext!) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext!) {
+        super.init(entity: entity, insertInto: context)
     }
     
     convenience init(managedObjectContext: NSManagedObjectContext!) {
-        let entity = Product.entity(managedObjectContext)
-        self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
+        let entity = Product.entity(managedObjectContext: managedObjectContext)
+        self.init(entity: entity!, insertInto: managedObjectContext)
     }
 
     class func entity(managedObjectContext: NSManagedObjectContext!) -> NSEntityDescription! {
-        return NSEntityDescription.entityForName(self.entityName, inManagedObjectContext: managedObjectContext);
+        return NSEntityDescription.entity(forEntityName: self.entityName, in: managedObjectContext);
     }
 
     class func aggregateProductsInContext(context:NSManagedObjectContext) -> [[String:AnyObject]]? {
@@ -38,7 +38,7 @@ class Product: NSManagedObject {
         var expressionDescriptions = [AnyObject]()
         
         // We want productLine to be one of the columns returned, so just add it as a string
-        expressionDescriptions.append("productLine")
+        expressionDescriptions.append("productLine" as AnyObject)
         
         // Create an expression description for our SoldCount column
         var expressionDescription = NSExpressionDescription()
@@ -48,7 +48,7 @@ class Product: NSManagedObject {
         // on which column. In this case sum on the sold column
         expressionDescription.expression = NSExpression(format: "@sum.sold")
         // Specify the return type we expect
-        expressionDescription.expressionResultType = .Integer32AttributeType
+        expressionDescription.expressionResultType = .integer32AttributeType
         // Append the description to our array
         expressionDescriptions.append(expressionDescription)
         
@@ -60,16 +60,16 @@ class Product: NSManagedObject {
         // on which column. In this case sum on the returned column
         expressionDescription.expression = NSExpression(format: "@sum.returned")
         // Specify the return type we expect
-        expressionDescription.expressionResultType = .Integer32AttributeType
+        expressionDescription.expressionResultType = .integer32AttributeType
         // Append the description to our array
         expressionDescriptions.append(expressionDescription)
         
         // Build out our fetch request the usual way
-        let request = NSFetchRequest(entityName: self.entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
         // This is the column we are grouping by. Notice this is the only non aggregate column.
         request.propertiesToGroupBy = ["productLine"]
         // Specify we want dictionaries to be returned
-        request.resultType = .DictionaryResultType
+        request.resultType = .dictionaryResultType
         // Go ahead and specify a sorter
         request.sortDescriptors = [NSSortDescriptor(key: "productLine", ascending: true)]
         // Hand off our expression descriptions to the propertiesToFetch field. Expressed as strings
@@ -82,7 +82,7 @@ class Product: NSManagedObject {
         
         // Perform the fetch. This is using Swfit 2, so we need a do/try/catch
         do {
-            results = try context.executeFetchRequest(request) as? [[String:AnyObject]]
+            results = try context.fetch(request) as? [[String:AnyObject]]
         } catch _ {
             // If it fails, ensure the array is nil
             results = nil
@@ -92,14 +92,14 @@ class Product: NSManagedObject {
     }
     
     class func productsForProductLine(productLine:String, managedObjectContext:NSManagedObjectContext) -> [Product]? {
-        let request = NSFetchRequest(entityName: self.entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
         request.predicate = NSPredicate(format: "productLine = %@", productLine)
         request.sortDescriptors = [NSSortDescriptor(key: "productName", ascending: true)]
         
         var results:[Product]?
         
         do {
-            results = try managedObjectContext.executeFetchRequest(request) as? [Product]
+            results = try managedObjectContext.fetch(request) as? [Product]
         } catch {
             results = nil
         }

@@ -24,19 +24,19 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailTableViewController
         }
         
-        self.productsAggregate = Product.aggregateProductsInContext(self.managedObjectContext!)
+        self.productsAggregate = Product.aggregateProductsInContext(context: self.managedObjectContext!)
     }
 
     // MARK: - Segues
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 if let product = self.productsAggregate?[indexPath.row] {
-                    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailTableViewController
+                    let controller = (segue.destination as! UINavigationController).topViewController as! DetailTableViewController
                     controller.managedObjectContext = self.managedObjectContext
                     controller.productLine = product["productLine"] as? String
-                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                     controller.navigationItem.leftItemsSupplementBackButton = true
                     
                 }
@@ -46,17 +46,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     // MARK: - Table View
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.productsAggregate?.count ?? 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath)
 
         if let aggregate = self.productsAggregate?[indexPath.row] {
             if let productLine = aggregate["productLine"] as? String,
-                soldCount = aggregate["SoldCount"] as? Int,
-                returnedCount = aggregate["ReturnedCount"] as? Int {
+                let soldCount = aggregate["SoldCount"] as? Int,
+                let returnedCount = aggregate["ReturnedCount"] as? Int {
                     cell.textLabel?.text = productLine
                     let labelText = String(format: "Sold: %d, Returned: %d", soldCount, returnedCount)
                     cell.detailTextLabel?.text = labelText

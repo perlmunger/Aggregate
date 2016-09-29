@@ -18,7 +18,7 @@ class DetailTableViewController: UITableViewController {
     var productLine:String? {
         didSet {
             self.title = productLine!
-            self.products = Product.productsForProductLine(productLine!, managedObjectContext: self.managedObjectContext!)
+            self.products = Product.productsForProductLine(productLine: productLine!, managedObjectContext: self.managedObjectContext!)
         }
     }
     
@@ -33,12 +33,12 @@ class DetailTableViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.products?.count ?? 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DetailCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath as IndexPath)
         
         if let product = self.products?[indexPath.row] {
             cell.textLabel?.text = product.fullNameWithCounts
